@@ -1,4 +1,6 @@
 author: Danny Guinther
+gems:
+  - octopress-gist
 highlighter: rouge
 markdown: redcarpet
 redcarpet:

@@ -2,3 +2,5 @@ _site
 s3_website.yml
 s3_website_dev.yml
 .jekyll-metadata
+.code-highlighter-cache/
+.gist-cache/

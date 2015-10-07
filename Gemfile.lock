@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:tdg5/octopress-gist.git
+  revision: 77e36d8e9aef40a4b02bae380d9a12fe56166e7e
+  branch: master
+  specs:
+    octopress-gist (1.3.5)
+      octopress-code-highlighter (~> 4.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -26,12 +34,20 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     mercenary (0.3.5)
+    method_source (0.8.2)
+    octopress-code-highlighter (4.2.6)
+      colorator (~> 0.1)
+      octopress-hooks
+    octopress-hooks (2.6.1)
+      jekyll (>= 2.0)
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rouge (1.9.1)
     safe_yaml (1.0.4)
     sass (3.4.18)
+    tco_method (0.0.4)
+      method_source (~> 0)
     timers (4.0.4)
       hitimes
 
@@ -40,3 +56,8 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll (= 3.0.0.pre.beta8)
+  octopress-gist!
+  tco_method
+
+BUNDLED WITH
+   1.10.6
