@@ -1,0 +1,15 @@
+.reveal .hpwe {
+  background-image: url(/assets/images/hpwe.jpg);
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  height: 700px;
+}
+
+.reveal .hpsse {
+  background-image: url(/assets/images/hpsse.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 700px;
+}
