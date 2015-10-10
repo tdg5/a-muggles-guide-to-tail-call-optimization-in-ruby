@@ -13,3 +13,31 @@
   background-size: contain;
   height: 700px;
 }
+
+.reveal .flames:after {
+  /* Without the -1px margin, a grey line appears. wtf? */
+  background: #000 url(/assets/images/flames.gif) center -1px repeat-x;
+  content: "";
+  display: block;
+  height: 200px;
+}
+
+.reveal .flames:before {
+  background: #000 url(/assets/images/flames-flip.gif) center top repeat-x;
+  content: "";
+  display: block;
+  height: 200px;
+}
+
+.reveal .flames {
+  background-color: #000;
+  margin: 0 auto;
+}
+
+.reveal .flames.consuming:after {
+  margin-top: -125px;
+}
+
+.reveal .flames.consuming:before {
+  margin-bottom: -125px;
+}
