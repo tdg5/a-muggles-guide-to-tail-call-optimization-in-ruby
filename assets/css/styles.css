@@ -67,4 +67,5 @@
 
 .reveal .without-borders {
   border: 0;
+  box-shadow: none;
 }
