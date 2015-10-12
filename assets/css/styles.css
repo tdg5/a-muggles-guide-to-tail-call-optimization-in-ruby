@@ -41,3 +41,26 @@
 .reveal .flames.consuming:before {
   margin-bottom: -125px;
 }
+
+.reveal .columns-2 .column {
+  float: left;
+  width: 50%;
+}
+
+.reveal .clearfix:after,
+.reveal .columns-2:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.reveal .font-size-l {
+  font-size: 125%;
+}
+
+.reveal .margin-top-1em {
+  margin-top: 1em;
+}
