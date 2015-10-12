@@ -47,6 +47,10 @@
   width: 50%;
 }
 
+.reveal .bg-trans {
+  background-color: transparent;
+}
+
 .reveal .clearfix:after,
 .reveal .columns-2:after {
   visibility: hidden;
@@ -61,8 +65,33 @@
   font-size: 125%;
 }
 
+.reveal .font-size-md {
+  font-size: 80%;
+}
+
+.reveal .font-size-sm {
+  font-size: 60%;
+}
+
+.reveal .margin-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .reveal .margin-top-1em {
   margin-top: 1em;
+}
+
+.reveal .text-align-left {
+  text-align: left;
+}
+
+.reveal .text-indent-all {
+  padding-left: 1em;
+}
+
+.reveal .width-three-quarter {
+  width: 75%;
 }
 
 .reveal .without-borders {
