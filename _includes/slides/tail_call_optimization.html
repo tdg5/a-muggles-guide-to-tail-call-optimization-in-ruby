@@ -70,7 +70,7 @@ return if 0.zero? # true
       <div class="column">
         <p>
           The unwound stack from the example is <strong>only accurate in an
-          environment where tail call optimization has been enabled</strong>.
+          environment with tail call optimization</strong>.
         </p>
         <p class="fragment margin-top-1em">
           I did mention that <strong>Ruby isn't tail call optimized</strong>,
@@ -115,8 +115,8 @@ return if 0.zero? # true
           Ruby allocates a new frame on the stack to execute the method.
         </p>
         <p class="fragment margin-top-1em">
-          So, if you imagine indentation represents a new stack frame, the
-          unwound sequence of instructions is really closer to this:
+          So, if you imagine each level of indentation represents a new stack
+          frame, the unwound sequence of instructions is really closer to this:
         </p>
       </div>
       <div class="column">
