@@ -1,5 +1,173 @@
 <section>
   <section>
-    <p>Coverage of the particulars of TCO in MRI Ruby</p>
+    <h3>That's all well and good<br>but if Ruby isn't tail call optimized then...</h3>
+    <img height="50%" src="assets/images/really-dont-care.gif">
+  </section>
+  <section>
+    <h2>About that...</h2>
+    <div class="fragment">
+      <p>What I should have said earlier was...</p>
+      <blockquote>
+        I did mention that Ruby isn't taill call optimized <strong>by
+        default</strong>, didn't I?
+      </blockquote>
+    </div>
+    <div class="fragment">
+      <strong>Note to self:</strong>
+      <div>
+        Correct previous statement to indicate that Ruby isn't tail call
+        optimized by default.
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Ruby is tail call optimized! Sort of...</h2>
+    <p class="fragment">
+      Ruby has included support for tail call optimization since all the way
+      back in Ruby 1.9.2
+    </p>
+    <p class="fragment">But it's never been enabled by default.</p>
+    <p class="fragment">
+      There was some talk of enabling it by default around the time that Ruby
+      2.0 was released, but nothing ever came of it.
+    </p>
+  </section>
+  <section>
+    <h2>Here be dragons!</h2>
+    <h4>Enabling tail call optimization in Ruby</h4>
+    <img width="90%" src="assets/images/here-be-dragons.gif">
+  </section>
+  <section>
+    <h3>Enabling tail call optimization in Ruby</h3>
+    <p class="fragment">
+      Tail call optimization can be enabled in a few different ways:
+    </p>
+    <ul>
+      <li class="fragment">
+        Enable universally with a flag at compile time
+      </li>
+      <li class="fragment">
+        Enable univerally at runtime by tweaking the configuration of
+        <code>RubyVM::InstructionSequence</code>
+      </li>
+      <li class="fragment">
+        Enable selectively at runtime by creating a specially configured
+        <code>RubyVM::InstructionSequence</code> instance
+      </li>
+      <li class="fragment">
+        Enable selectively at runtime with helper method annotations using the
+        <code>tco_method</code> gem<br>
+        <span class="font-size-md">
+          (<strong>Full disclosure:</strong> I am the author of this gem)
+        </span>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Pause for awe</h2>
+    <img src="assets/images/hp-mind-blown.gif">
+  </section>
+  <section>
+    <p class="font-size-lg"><code>RubyVM::InstructionSequence</code></p>
+    <p class="font-size-md">
+      Since, the <code>tco_method</code> gem uses
+      <code>RubyVM::InstructionSequence</code> under the hood, let's start
+      there.
+    </p>
+    <p class="fragment">
+      The <code>RubyVM::InstructionSequence</code> class represents a compiled
+      sequence of instructions for the Ruby Virtual Machine.
+    </p>
+    <p class="font-size-md fragment">
+      With it, you can get a handle to the instructions that make up a method or
+      a proc, compile strings of Ruby code down to VM instructions, and
+      disassemble instruction sequences to strings for easy inspection. It is
+      mostly useful if you want to learn how the Ruby VM works, but it also lets
+      you control various settings for the Ruby iseq compiler.
+    </p>
+  </section>
+  <section>
+    <p class="font-size-lg">
+      Selective tail call optimization at runtime with
+      <code>RubyVM::InstructionSequence</code>
+    </p>
+    <p>Basic usage for TCO:</p>
+    <pre><code class="ruby" data-trim>
+iseq_options = {
+  tailcall_optimization: true,
+  trace_instruction: false,
+}
+
+iseq = RubyVM::InstructionSequence.new(
+  code_to_compile,
+  file_path,
+  dir_path,
+  line_no,
+  iseq_options)
+
+iseq.eval
+    </code></pre>
+    <p class="fragment font-size-md">Kind of clunky</p>
+  </section>
+  <section>
+    <h3>Examples of Ruby TCO</h3>
+    <p>Recursive factorial using <code>RubyVM::InstructionSequence</code></p>
+    <pre><code class="ruby" data-trim>
+code = &lt;&lt;-CODE
+  def recursive_factorial(n, accumulator = 1)
+    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+  end
+CODE
+
+iseq_opts = {
+  tailcall_optimization: true,
+  trace_instruction: false,
+}
+
+iseq = RubyVM::InstructionSequence.new(code, nil, nil, nil, iseq_opts)
+iseq.eval
+
+recursive_factorial(5000)
+    </code></pre>
+    <p class="fragment">Definitely clunky</p>
+  </section>
+  <section>
+    <h3>Examples of Ruby TCO</h3>
+    <p>Recursive factorial using <code>TCOMethod.tco_eval</code></p>
+    <pre><code class="ruby" data-trim>
+require "tco_method"
+
+TCOMethod.tco_eval &lt;&lt;-CODE
+  def recursive_factorial(n, accumulator = 1)
+    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+  end
+CODE
+
+recursive_factorial(5000)
+    </code></pre>
+    <p class="fragment">
+      Still clunky, but code strings are always going to be clunky
+    </p>
+  </section>
+  <section>
+    <h3>Examples of Ruby TCO</h3>
+    <p>Recursive factorial using <code>TCOMethod::Mixin</code></p>
+    <pre><code class="ruby" data-trim>
+require "tco_method"
+
+module Factorial
+  extend TCOMethod::Mixin
+
+  def self.recursive_factorial(n, accumulator = 1)
+    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+  end
+  tco_module_method :recursive_factorial
+end
+
+Factorial.recursive_factorial(5000)
+    </code></pre>
+    <p class="fragment">
+      Definitely prettier than a <code>SystemStackError</code>
+    </p>
   </section>
 </section>
