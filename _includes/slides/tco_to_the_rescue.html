@@ -1,0 +1,99 @@
+<section>
+  <section>
+    <h2>The secret magic of tail calls</h2>
+    <img width="70%" src="assets/images/i-love-magic.gif">
+  </section>
+  <section>
+    <h3>The secret magic of tail calls</h3>
+    <p>
+      The trick is that since a tail call is <strong>by definition</strong> the
+      final action of a procedure, we can safely make some assumptions.
+    </p>
+    <p class="fragment" data-fragment-index="1">
+      The most important consequence of these assumptions is that <span
+      class="fragment highlight-green" data-fragment-index="2">since a tail call
+      is the last action of a procedure,</span> we can assume that <span
+      class="fragment highlight-green" data-fragment-index="2"><strong>
+      nothing</strong> else in the calling method will be needed after the tail
+      call is made.</span>
+    </p>
+    <p class="fragment font-size-lg"><strong>Nothing.</strong></p>
+  </section>
+  <section>
+    <p>
+      If nothing from the calling method is needed after the tail call, why keep
+      it around?
+    </p>
+    <p class="fragment">This is the essence of tail call optimization.</p>
+  </section>
+  <section>
+    <p>
+      Hanging on to the stack frame from the parent serves two main functions:
+    </p>
+    <ul>
+      <li class="fragment">
+        Keep a pointer to where the result of the tail call should be sent
+      </li>
+      <li class="fragment">
+        Keep a record of the execution stack or where we've been up to this
+        point
+      </li>
+    </ul>
+    <p class="fragment">
+      Of these two functions, the only function that is absolutely necessary is
+      keeping a pointer to where the result of the tail call should be sent.
+    </p>
+  </section>
+  <section>
+    <div class="flames font-size-lg">
+      <p>
+        Keeping a record of the execution stack is nice,<br>but it's really just
+        a convenience.
+      </p>
+      <p class="font-size-md">
+        In Ruby, the current call stack can be retrieved using the
+        <code>caller</code> method.
+      </p>
+    </div>
+  </section>
+  <section>
+    <h4>
+      Let's pretend we don't care about the complete call stack...
+    </h4>
+    <p class="fragment">
+      If we don't care about maintaining the complete call stack, is there
+      anything we can do to get around the need to keep the parent's stack frame
+      around for the purposes of knowing where to return the result of the tail
+      call?
+    </p>
+    <p class="fragment"><strong>As it turns out, yes.</strong></p>
+    <p class="fragment">
+      If the stack frame of the tail call is going to need to know to return its
+      result to the parent anyway, why not just circumvent the parent entirely
+      and return the result of the tail call to the parent of the parent?
+    </p>
+  </section>
+  <section>
+    <h1>Boom</h1>
+    <p>This is the magic of tail call elimination.</p>
+    <p class="font-size-lg fragment">That's a lot to wrap a mind around...</p>
+    <h2 class="fragment">Questions?</h2>
+    <h3 class="fragment">Tylenol?</h3>
+  </section>
+  <section>
+    <h3>But why stop there?</h3>
+    <p class="fragment">
+      As it turns out, the phrase tail call elimination is a little misleading.
+    </p>
+    <p class="fragment">
+      If you're going to circumvent the parent entirely, why go through the
+      effort of creating a new stack frame for the tail call only to discard the
+      stack frame of the parent?
+    </p>
+    <p class="fragment">
+      In practice, tail call elimination is more a kin to tail call
+      avoidance. There is no extra stack frame that is eliminated, rather the
+      stack frame of the parent is recycled and reused to execute the tail call.
+    </p>
+  </section>
+</section>
