@@ -1,0 +1,224 @@
+<section>
+  <section>
+    <h2>Tail call optimization</h2>
+    <h4 class="fragment">But first, a confession</h4>
+  </section>
+  <section>
+    <h3>Remember Obi-wan?</h3>
+    <img src="assets/images/obi-wan-meme.jpg">
+  </section>
+  <section><img src="assets/images/keep-calm-and-move-along.gif"></section>
+  <section>
+    <h4>This is only true... from a certain point of view</h4>
+    <div class="columns-2">
+      <div class="column">
+        <div>
+          <p class="font-size-md text-align-left">Example:</p>
+          <pre><code contenteditable class="ruby">
+def recursive_countdown(i = 5)
+  puts i
+  return if i.zero?
+  recursive_countdown(i - 1)
+end
+
+recursive_countdown
+          </code></pre>
+        </div>
+        <div>
+          <p class="font-size-md text-align-left">Output:</p>
+          <pre><code contenteditable>
+5
+4
+3
+2
+1
+0
+          </code></pre>
+        </div>
+      </div>
+      <div class="column">
+        <div>
+          <p class="font-size-md text-align-left">Unwound:</p>
+          <pre><code contenteditable class="code-unbound">
+recursive_countdown(5)
+puts 5
+return if 5.zero? # false
+recursive_countdown(5 - 1)
+puts 4
+return if 4.zero? # false
+recursive_countdown(4 - 1)
+puts 3
+return if 3.zero? # false
+recursive_countdown(3 - 1)
+puts 2
+return if 2.zero? # false
+recursive_countdown(2 - 1)
+puts 1
+return if 1.zero? # false
+recursive_countdown(1 - 1)
+puts 0
+return if 0.zero? # true
+# Fin
+          </code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>The truth</h2>
+    <div class="columns-2">
+      <div class="column">
+        <p>
+          The unwound stack from the example is <strong>only accurate in an
+          environment where tail call optimization has been enabled</strong>.
+        </p>
+        <p class="fragment margin-top-1em">
+          I did mention that <strong>Ruby isn't tail call optimized</strong>,
+          didn't I?
+        </p>
+        <p class="fragment margin-top-1em">
+          <strong>Note to self:</strong> Note that Ruby isn't tail call optimized earlier.
+        </p>
+      </div>
+      <div class="column">
+        <pre><code contenteditable class="code-unbound">
+recursive_countdown(5)
+puts 5
+return if 5.zero? # false
+recursive_countdown(5 - 1)
+puts 4
+return if 4.zero? # false
+recursive_countdown(4 - 1)
+puts 3
+return if 3.zero? # false
+recursive_countdown(3 - 1)
+puts 2
+return if 2.zero? # false
+recursive_countdown(2 - 1)
+puts 1
+return if 1.zero? # false
+recursive_countdown(1 - 1)
+puts 0
+return if 0.zero? # true
+# Fin
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section><h2>Okay, so what?</h2></section>
+  <section>
+    <h3>What's really happening?</h3>
+    <div class="columns-2">
+      <div class="column">
+        <p class="fragment">
+          In reality, each time <code>recursive_countdown</code> is called,
+          Ruby allocates a new frame on the stack to execute the method.
+        </p>
+        <p class="fragment margin-top-1em">
+          So, if you imagine indentation represents a new stack frame, the
+          unwound sequence of instructions is really closer to this:
+        </p>
+      </div>
+      <div class="column">
+        <pre class="fragment"><code contenteditable class="code-unbound">
+recursive_countdown(5)
+  puts 5
+  return if 5.zero?
+  recursive_countdown(4)
+    puts 4
+    return if 4.zero?
+    recursive_countdown(3)
+      puts 3
+      return if 3.zero?
+      recursive_countdown(2)
+        puts 2
+        return if 2.zero?
+        recursive_countdown(1)
+          puts 1
+          return if 1.zero?
+          recursive_countdown(0)
+            puts 0
+            return if 0.zero?
+            # Fin
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="columns-2 columns-40-60">
+      <div class="column">
+        <p>
+          This isn't a big deal if we're counting down from five.
+        </p>
+        <p>Ruby can handle it.</p>
+        <p class="fragment" data-fragment-index="1">
+          But what if we want to count down from a million?
+        </p>
+        <p class="fragment" data-fragment-index="2">Or even ten thousand?</p>
+        <h3 class="fragment" data-fragment-index="4">Really?</h3>
+      </div>
+      <div class="column">
+        <pre class="fragment" data-fragment-index="3"><code contenteditable class="code-unbound overflow-hidden">
+recursive_countdown(10_000)
+  puts 10_000
+  return if 10_000.zero?
+  recursive_countdown(9_999)
+    puts 9_999
+    return if 9_999.zero?
+    recursive_countdown(9_998)
+      puts 9_998
+      return if 9_998.zero?
+      recursive_countdown(9_997)
+        puts 9_997
+        return if 9_997.zero?
+        recursive_countdown(9_996)
+          puts 9_996
+          return if 9_996.zero?
+          recursive_countdown(9_995)
+            puts 9_994
+            return if 9_994.zero?
+            recursive_countdown(9_994)
+              puts 9_994
+              return if 9_994.zero?
+              recursive_countdown(9_993)
+                puts 9_993
+                return if 9_993.zero?
+                recursive_countdown(9_992)
+                  puts 9_992
+                  return if 9_992.zero?
+                  recursive_countdown(9_991)
+                  # ...
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <pre><code contenteditable class="code-unbound nohighlight">
+$ ruby recursive_countdown.rb 10000
+10000
+9999
+9998
+...
+646
+645
+644
+recursive_countdown.rb:2: stack level too deep (SystemStackError)
+        from recursive_countdown.rb:2:in `puts'
+        from recursive_countdown.rb:2:in `recursive_countdown'
+        from recursive_countdown.rb:4:in `recursive_countdown'
+        from recursive_countdown.rb:4:in `recursive_countdown'
+        from recursive_countdown.rb:4:in `recursive_countdown'
+         ... 9351 levels...
+        from recursive_countdown.rb:4:in `recursive_countdown'
+        from recursive_countdown.rb:4:in `recursive_countdown'
+        from recursive_countdown.rb:4:in `recursive_countdown'
+        from recursive_countdown.rb:7:in `&lt;main&gt;'
+    </code></pre>
+    <p class="fragment">
+      A lack of tail call optimization means that recursive solutions aren't
+      really viable for large inputs, which makes many classic functional
+      approaches impossible.
+    </p>
+  </section>
+  <section><img src="assets/images/tco-to-the-rescue.jpg"></section>
+</section>

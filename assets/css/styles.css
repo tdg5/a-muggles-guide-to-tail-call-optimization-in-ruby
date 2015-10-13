@@ -47,12 +47,20 @@
 }
 
 .reveal .code-unbound {
-  max-height: initial;
+  max-height: 550px;
 }
 
 .reveal .columns-2 .column {
   float: left;
   width: 50%;
+}
+
+.reveal .columns-2.columns-40-60 .column {
+  float: left;
+  width: 40%;
+}
+.reveal .columns-2.columns-40-60 .column:last-child {
+  width: 60%;
 }
 
 .reveal .columns-3 .column {
@@ -103,6 +111,10 @@
 
 .reveal .margin-top-1em {
   margin-top: 1em;
+}
+
+.reveal .overflow-hidden {
+  overflow: hidden;
 }
 
 .reveal .text-align-left {
