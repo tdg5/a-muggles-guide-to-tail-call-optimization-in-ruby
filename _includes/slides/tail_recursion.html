@@ -14,7 +14,7 @@
       <div class="column">
         <div class="fragment">
           <p class="font-size-md text-align-left">Example:</p>
-          <pre><code contenteditable class="ruby">
+          <pre><code contenteditable class="ruby" data-trim>
 def recursive_countdown(i = 5)
   puts i
   return if i.zero?
@@ -26,7 +26,7 @@ recursive_countdown
         </div>
         <div class="fragment">
           <p class="font-size-md text-align-left">Output:</p>
-          <pre><code contenteditable>
+          <pre><code contenteditable class="nohighlight" data-trim>
 5
 4
 3
@@ -39,7 +39,7 @@ recursive_countdown
       <div class="column">
         <div class="fragment">
           <p class="font-size-md text-align-left">Unwound:</p>
-          <pre><code contenteditable class="code-unbound">
+          <pre><code contenteditable class="code-unbound ruby" data-trim>
 recursive_countdown(5)
 puts 5
 return if 5.zero? # false
@@ -83,7 +83,7 @@ return if 0.zero? # true
     </p>
     <div class="columns-2">
       <div class="column">
-        <pre><code contenteditable>
+        <pre><code contenteditable class="ruby" data-trim>
 def recursive_countdown(i = 5)
   if i &gt;= 0
     puts i
@@ -93,7 +93,7 @@ end
         </code></pre>
       </div>
       <div class="column">
-        <pre><code contenteditable>
+        <pre><code contenteditable class="ruby" data-trim>
 def iterative_countdown(i = 5)
   while i &gt;= 0
     puts i

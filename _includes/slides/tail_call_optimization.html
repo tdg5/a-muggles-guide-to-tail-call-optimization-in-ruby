@@ -14,7 +14,7 @@
       <div class="column">
         <div>
           <p class="font-size-md text-align-left">Example:</p>
-          <pre><code contenteditable class="ruby">
+          <pre><code contenteditable class="ruby" data-trim>
 def recursive_countdown(i = 5)
   puts i
   return if i.zero?
@@ -26,7 +26,7 @@ recursive_countdown
         </div>
         <div>
           <p class="font-size-md text-align-left">Output:</p>
-          <pre><code contenteditable>
+          <pre><code contenteditable class="nohighlight" data-trim>
 5
 4
 3
@@ -39,7 +39,7 @@ recursive_countdown
       <div class="column">
         <div>
           <p class="font-size-md text-align-left">Unwound:</p>
-          <pre><code contenteditable class="code-unbound">
+          <pre><code contenteditable class="ruby code-unbound" data-trim>
 recursive_countdown(5)
 puts 5
 return if 5.zero? # false
@@ -81,7 +81,7 @@ return if 0.zero? # true
         </p>
       </div>
       <div class="column">
-        <pre><code contenteditable class="code-unbound">
+        <pre><code contenteditable class="ruby code-unbound" data-trim>
 recursive_countdown(5)
 puts 5
 return if 5.zero? # false
@@ -120,7 +120,7 @@ return if 0.zero? # true
         </p>
       </div>
       <div class="column">
-        <pre class="fragment"><code contenteditable class="code-unbound">
+        <pre class="fragment"><code contenteditable class="code-unbound ruby" data-trim>
 recursive_countdown(5)
   puts 5
   return if 5.zero?
@@ -158,7 +158,7 @@ recursive_countdown(5)
         <h3 class="fragment" data-fragment-index="4">Really?</h3>
       </div>
       <div class="column">
-        <pre class="fragment" data-fragment-index="3"><code contenteditable class="code-unbound overflow-hidden">
+        <pre class="fragment" data-fragment-index="3"><code contenteditable class="ruby code-unbound overflow-hidden" data-trim>
 recursive_countdown(10_000)
   puts 10_000
   return if 10_000.zero?
@@ -193,7 +193,7 @@ recursive_countdown(10_000)
     </div>
   </section>
   <section>
-    <pre><code contenteditable class="code-unbound nohighlight">
+    <pre><code contenteditable class="code-unbound nohighlight" data-trim>
 $ ruby recursive_countdown.rb 10000
 10000
 9999

@@ -1,7 +1,7 @@
 <section>
   <section>
     <h3>Canonical Example</h3>
-    <pre><code contenteditable class="ruby">
+    <pre><code contenteditable class="ruby" data-trim>
 def this_method_features_a_call_in_tail_position!
   other_method
 end
@@ -9,7 +9,7 @@ end
   </section>
   <section>
     <h3>Canonical Counter-Example</h3>
-    <pre><code contenteditable class="ruby">
+    <pre><code contenteditable class="ruby" data-trim>
 def this_method_does_not_feature_a_call_in_tail_position!
   other_method + 1
 end
@@ -17,7 +17,7 @@ end
 
     <div class="fragment">
       <h4>Still no good</h4>
-      <pre><code contenteditable class="ruby">
+      <pre><code contenteditable class="ruby" data-trim>
 def this_method_still_does_not_feature_a_call_in_tail_position!
   1 + other_method
 end
@@ -33,14 +33,14 @@ end
     <h3>Other proper tail calls</h3>
     <div class="columns-2">
       <div class="column">
-        <pre><code contenteditable class="ruby">
+        <pre><code contenteditable class="ruby" data-trim>
 def iffy_mid_method_tail_call
   i = rand(2)
   return other_method if i.zero?
   i
 end
         </code></pre>
-        <pre class="fragment" data-fragment-index="3"><code contenteditable class="ruby">
+        <pre class="fragment" data-fragment-index="3"><code contenteditable class="ruby" data-trim>
 def recursive_countdown(i = 10)
   puts i
   return if i.zero?
@@ -49,7 +49,7 @@ end
         </code></pre>
       </div>
       <div class="column">
-        <pre class="fragment" data-fragment-index="2"><code contenteditable class="ruby">
+        <pre class="fragment" data-fragment-index="2"><code contenteditable class="ruby" data-trim>
 def or_right_hand_side
   false || other_method
 end
@@ -58,7 +58,7 @@ def and_right_hand_side
   true && other_method
 end
         </code></pre>
-        <pre class="fragment" data-fragment-index="1"><code contenteditable class="ruby">
+        <pre class="fragment" data-fragment-index="1"><code contenteditable class="ruby" data-trim>
 def expression_in_args(some_int)
   other_method(some_int + 1)
 end
