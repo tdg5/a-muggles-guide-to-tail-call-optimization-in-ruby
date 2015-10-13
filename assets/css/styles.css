@@ -55,12 +55,23 @@
   width: 50%;
 }
 
+.reveal .columns-3 .column {
+  float: left;
+  width: 10%;
+}
+
+.reveal .columns-3 .column:first-child,
+.reveal .columns-3 .column:last-child {
+  width: 45%;
+}
+
 .reveal .bg-trans {
   background-color: transparent;
 }
 
 .reveal .clearfix:after,
-.reveal .columns-2:after {
+.reveal .columns-2:after,
+.reveal .columns-3:after {
   visibility: hidden;
   display: block;
   font-size: 0;
