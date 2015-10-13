@@ -1,17 +1,22 @@
 <section>
   <section>
-    <h2>Why Not Tail-Call Optimization?</h2>
+    <h2>Why Not Tail Call Optimization?</h2>
   </section>
   <section>
-    <p>Stack frames ending with tail calls are eliminated from the stack</p>
-  </section>
-  <section>
-    <p>Little known, sometimes used <code>set_trace_func</code> not handled
-  </section>
-  <section>
-    <p>As currently implemented, takes special handling to use</p>
-  </section>
-  <section>
-    <p>Not supported for all method call like things</p>
+    <ul>
+      <li>
+        Stack frames ending with tail calls are eliminated from the stack.
+        <ul><li class="fragment">Makes debugging harder</li></ul>
+      </li>
+      <li class="fragment">
+        The little known, sometimes used <code>set_trace_func</code> isn't
+        supported when tail call optimization is enabled
+      </li>
+      <li class="fragment">As currently implemented, can be cumbersome to use</li>
+      <li class="fragment">Relatively unused/untested despite availability</li>
+      <li class="fragment">
+        Still some weirdness in what constitutes a tail call
+      </li>
+    </ul>
   </section>
 </section>
