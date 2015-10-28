@@ -2,7 +2,7 @@
   <section>
     <h3>Canonical Example</h3>
     <pre><code contenteditable class="ruby" data-trim>
-def this_method_features_a_call_in_tail_position!
+def a_call_in_tail_position!
   other_method
 end
     </code></pre>
@@ -10,7 +10,7 @@ end
   <section>
     <h3>Canonical Counter-Example</h3>
     <pre><code contenteditable class="ruby" data-trim>
-def this_method_does_not_feature_a_call_in_tail_position!
+def not_a_call_in_tail_position!
   other_method + 1
 end
     </code></pre>
@@ -18,7 +18,7 @@ end
     <div class="fragment">
       <h4>Still no good</h4>
       <pre><code contenteditable class="ruby" data-trim>
-def this_method_still_does_not_feature_a_call_in_tail_position!
+def still_not_a_call_in_tail_position!
   1 + other_method
 end
       </code></pre>
@@ -34,33 +34,33 @@ end
     <div class="columns-2">
       <div class="column">
         <pre><code contenteditable class="ruby" data-trim>
-def iffy_mid_method_tail_call
+def iffy_mid_method_tc
   i = rand(2)
-  return other_method if i.zero?
+  return some_call if i &gt; 0
   i
 end
         </code></pre>
         <pre class="fragment" data-fragment-index="3"><code contenteditable class="ruby" data-trim>
-def recursive_countdown(i = 10)
+def recursive_count(i = 5)
   puts i
   return if i.zero?
-  recursive_countdown(i - 1)
+  recursive_count(i - 1)
 end
         </code></pre>
       </div>
       <div class="column">
         <pre class="fragment" data-fragment-index="2"><code contenteditable class="ruby" data-trim>
 def or_right_hand_side
-  false || other_method
+  false || other_call
 end
 
 def and_right_hand_side
-  true && other_method
+  true && other_call
 end
         </code></pre>
         <pre class="fragment" data-fragment-index="1"><code contenteditable class="ruby" data-trim>
-def expression_in_args(some_int)
-  other_method(some_int + 1)
+def arg_expression(my_int)
+  other_call(my_int + 1)
 end
         </code></pre>
       </div>

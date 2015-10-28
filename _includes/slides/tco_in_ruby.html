@@ -91,75 +91,67 @@
       Selective tail call optimization at runtime with
       <code>RubyVM::InstructionSequence</code>
     </p>
-    <p>Basic usage for TCO:</p>
-    <pre><code class="ruby" data-trim>
-iseq_options = {
+    <pre><code contenteditable spellcheck="false" class="ruby code-unbound" data-trim>
+ISEQ_OPTIONS = {
   tailcall_optimization: true,
   trace_instruction: false,
 }
 
 iseq = RubyVM::InstructionSequence.new(
-  code_to_compile,
-  file_path,
-  dir_path,
-  line_no,
-  iseq_options)
+         code_to_compile, file_path, dir_path,
+         line_no, ISEQ_OPTIONS)
 
 iseq.eval
     </code></pre>
     <p class="fragment font-size-md">Kind of clunky</p>
   </section>
   <section>
-    <h3>Examples of Ruby TCO</h3>
     <p>Recursive factorial using <code>RubyVM::InstructionSequence</code></p>
-    <pre><code class="ruby" data-trim>
+    <pre><code class="ruby code-unbound" data-trim>
 code = &lt;&lt;-CODE
   def recursive_factorial(n, accumulator = 1)
-    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+    return accumulator if n &lt;= 1
+    recursive_factorial(n - 1, accumulator * n)
   end
 CODE
 
-iseq_opts = {
-  tailcall_optimization: true,
-  trace_instruction: false,
-}
-
-iseq = RubyVM::InstructionSequence.new(code, nil, nil, nil, iseq_opts)
+iseq = RubyVM::InstructionSequence.new(
+         code, nil, nil, nil, ISEQ_OPTIONS)
 iseq.eval
 
 recursive_factorial(5000)
     </code></pre>
-    <p class="fragment">Definitely clunky</p>
+    <p class="fragment">Clunky town!</p>
   </section>
   <section>
-    <h3>Examples of Ruby TCO</h3>
     <p>Recursive factorial using <code>TCOMethod.tco_eval</code></p>
-    <pre><code class="ruby" data-trim>
+    <pre><code class="ruby code-unbound" data-trim>
 require "tco_method"
 
 TCOMethod.tco_eval &lt;&lt;-CODE
   def recursive_factorial(n, accumulator = 1)
-    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+    return accumulator if n &lt;= 1
+    recursive_factorial(n - 1, accumulator * n)
   end
 CODE
 
 recursive_factorial(5000)
     </code></pre>
     <p class="fragment">
-      Still clunky, but code strings are always going to be clunky
+      Still clunky. Code strings are always going to be clunky.
     </p>
   </section>
   <section>
-    <h3>Examples of Ruby TCO</h3>
     <p>Recursive factorial using <code>TCOMethod::Mixin</code></p>
-    <pre><code class="ruby" data-trim>
+    <pre><code class="ruby code-unbound" data-trim>
 require "tco_method"
 
 module Factorial
   extend TCOMethod::Mixin
 
   def self.recursive_factorial(n, accumulator = 1)
-    n &lt;= 1 ? accumulator : recursive_factorial(n - 1, accumulator * n)
+    return accumulator if n &lt;= 1
+    recursive_factorial(n - 1, accumulator * n)
   end
   tco_module_method :recursive_factorial
 end

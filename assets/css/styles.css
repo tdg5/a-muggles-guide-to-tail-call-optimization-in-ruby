@@ -3,7 +3,7 @@
   background-size: contain;
   background-position: center top;
   background-repeat: no-repeat;
-  height: 700px;
+  height: 680px;
 }
 
 .reveal .hpsse {
@@ -11,7 +11,7 @@
   background-position: center top;
   background-repeat: no-repeat;
   background-size: contain;
-  height: 700px;
+  height: 680px;
 }
 
 .reveal .flames:after {
@@ -20,6 +20,7 @@
   content: "";
   display: block;
   height: 200px;
+  margin-top: -50px;
 }
 
 .reveal .flames:before {
@@ -27,6 +28,7 @@
   content: "";
   display: block;
   height: 200px;
+  margin-bottom: -50px;
 }
 
 .reveal .flames {
@@ -47,7 +49,7 @@
 }
 
 .reveal .code-unbound {
-  max-height: 550px;
+  max-height: 16em;
 }
 
 .reveal .columns-2 .column {
@@ -132,4 +134,9 @@
 .reveal .without-borders {
   border: 0;
   box-shadow: none;
+}
+
+.reveal pre {
+  font-size: 1em;
+  width: 95%;
 }

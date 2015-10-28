@@ -5,7 +5,7 @@
   </section>
   <section>
     <h3>Remember Obi-wan?</h3>
-    <img width="70%" src="assets/images/obi-wan-meme.jpg">
+    <img height="80%" src="assets/images/obi-wan-meme.jpg">
   </section>
   <section><img src="assets/images/keep-calm-and-move-along.gif"></section>
   <section>
@@ -14,19 +14,17 @@
       <div class="column">
         <div>
           <p class="font-size-md text-align-left">Example:</p>
-          <pre><code contenteditable class="ruby" data-trim>
-def recursive_countdown(i = 5)
+          <pre><code spellcheck="false" spellcheck="false" contenteditable class="ruby" data-trim>
+def recursive_count(i = 5)
   puts i
   return if i.zero?
-  recursive_countdown(i - 1)
+  recursive_count(i - 1)
 end
-
-recursive_countdown
           </code></pre>
         </div>
         <div>
           <p class="font-size-md text-align-left">Output:</p>
-          <pre><code contenteditable class="nohighlight" data-trim>
+          <pre><code spellcheck="false" contenteditable class="nohighlight" data-trim>
 5
 4
 3
@@ -39,23 +37,23 @@ recursive_countdown
       <div class="column">
         <div>
           <p class="font-size-md text-align-left">Unwound:</p>
-          <pre><code contenteditable class="ruby code-unbound" data-trim>
-recursive_countdown(5)
+          <pre><code spellcheck="false" contenteditable class="ruby code-unbound" data-trim>
+recursive_count(5)
 puts 5
 return if 5.zero? # false
-recursive_countdown(5 - 1)
+recursive_count(5 - 1)
 puts 4
 return if 4.zero? # false
-recursive_countdown(4 - 1)
+recursive_count(4 - 1)
 puts 3
 return if 3.zero? # false
-recursive_countdown(3 - 1)
+recursive_count(3 - 1)
 puts 2
 return if 2.zero? # false
-recursive_countdown(2 - 1)
+recursive_count(2 - 1)
 puts 1
 return if 1.zero? # false
-recursive_countdown(1 - 1)
+recursive_count(1 - 1)
 puts 0
 return if 0.zero? # true
 # Fin
@@ -82,23 +80,23 @@ return if 0.zero? # true
         </p>
       </div>
       <div class="column">
-        <pre><code contenteditable class="ruby code-unbound" data-trim>
-recursive_countdown(5)
+        <pre><code spellcheck="false" contenteditable class="ruby code-unbound" data-trim>
+recursive_count(5)
 puts 5
 return if 5.zero? # false
-recursive_countdown(5 - 1)
+recursive_count(5 - 1)
 puts 4
 return if 4.zero? # false
-recursive_countdown(4 - 1)
+recursive_count(4 - 1)
 puts 3
 return if 3.zero? # false
-recursive_countdown(3 - 1)
+recursive_count(3 - 1)
 puts 2
 return if 2.zero? # false
-recursive_countdown(2 - 1)
+recursive_count(2 - 1)
 puts 1
 return if 1.zero? # false
-recursive_countdown(1 - 1)
+recursive_count(1 - 1)
 puts 0
 return if 0.zero? # true
 # Fin
@@ -112,7 +110,7 @@ return if 0.zero? # true
     <div class="columns-2">
       <div class="column">
         <p class="fragment">
-          In reality, each time <code>recursive_countdown</code> is called,
+          In reality, each time <code>recursive_count</code> is called,
           Ruby allocates a new frame on the stack to execute the method.
         </p>
         <p class="fragment margin-top-1em">
@@ -121,23 +119,23 @@ return if 0.zero? # true
         </p>
       </div>
       <div class="column">
-        <pre class="fragment"><code contenteditable class="code-unbound ruby" data-trim>
-recursive_countdown(5)
+        <pre class="fragment"><code spellcheck="false" contenteditable class="code-unbound ruby" data-trim>
+recursive_count(5)
   puts 5
   return if 5.zero?
-  recursive_countdown(4)
+  recursive_count(4)
     puts 4
     return if 4.zero?
-    recursive_countdown(3)
+    recursive_count(3)
       puts 3
       return if 3.zero?
-      recursive_countdown(2)
+      recursive_count(2)
         puts 2
         return if 2.zero?
-        recursive_countdown(1)
+        recursive_count(1)
           puts 1
           return if 1.zero?
-          recursive_countdown(0)
+          recursive_count(0)
             puts 0
             return if 0.zero?
             # Fin
@@ -159,61 +157,55 @@ recursive_countdown(5)
         <h3 class="fragment" data-fragment-index="4">Really?</h3>
       </div>
       <div class="column">
-        <pre class="fragment" data-fragment-index="3"><code contenteditable class="ruby code-unbound overflow-hidden" data-trim>
-recursive_countdown(10_000)
+        <pre class="fragment" data-fragment-index="3"><code spellcheck="false" contenteditable class="ruby code-unbound overflow-hidden" data-trim>
+recursive_count(10_000)
   puts 10_000
   return if 10_000.zero?
-  recursive_countdown(9_999)
+  recursive_count(9_999)
     puts 9_999
     return if 9_999.zero?
-    recursive_countdown(9_998)
+    recursive_count(9_998)
       puts 9_998
       return if 9_998.zero?
-      recursive_countdown(9_997)
+      recursive_count(9_997)
         puts 9_997
         return if 9_997.zero?
-        recursive_countdown(9_996)
+        recursive_count(9_996)
           puts 9_996
           return if 9_996.zero?
-          recursive_countdown(9_995)
+          recursive_count(9_995)
             puts 9_994
             return if 9_994.zero?
-            recursive_countdown(9_994)
+            recursive_count(9_994)
               puts 9_994
               return if 9_994.zero?
-              recursive_countdown(9_993)
+              recursive_count(9_993)
                 puts 9_993
                 return if 9_993.zero?
-                recursive_countdown(9_992)
+                recursive_count(9_992)
                   puts 9_992
                   return if 9_992.zero?
-                  recursive_countdown(9_991)
+                  recursive_count(9_991)
                   # ...
         </code></pre>
       </div>
     </div>
   </section>
   <section>
-    <pre><code contenteditable class="code-unbound nohighlight" data-trim>
-$ ruby recursive_countdown.rb 10000
+    <pre><code spellcheck="false" spellcheck="false" contenteditable class="code-unbound nohighlight" data-trim>
+$ ruby rcount.rb 10000
 10000
 9999
-9998
 ...
-646
 645
 644
-recursive_countdown.rb:2: stack level too deep (SystemStackError)
-        from recursive_countdown.rb:2:in `puts'
-        from recursive_countdown.rb:2:in `recursive_countdown'
-        from recursive_countdown.rb:4:in `recursive_countdown'
-        from recursive_countdown.rb:4:in `recursive_countdown'
-        from recursive_countdown.rb:4:in `recursive_countdown'
-         ... 9351 levels...
-        from recursive_countdown.rb:4:in `recursive_countdown'
-        from recursive_countdown.rb:4:in `recursive_countdown'
-        from recursive_countdown.rb:4:in `recursive_countdown'
-        from recursive_countdown.rb:7:in `&lt;main&gt;'
+rcount.rb:2: stack level too deep (SystemStackError)
+    from rcount.rb:2:in `recursive_count'
+    from rcount.rb:4:in `recursive_count'
+     ... 9354 levels...
+    from rcount.rb:4:in `recursive_count'
+    from rcount.rb:4:in `recursive_count'
+    from rcount.rb:7:in `&lt;main&gt;'
     </code></pre>
     <p class="fragment">
       A lack of tail call optimization means that recursive solutions aren't
