@@ -68,6 +68,24 @@
     <img width="90%" src="assets/images/hp-mind-blown.gif">
   </section>
   <section>
+    <h2>Patched Ruby with TCO</h2>
+    <pre><code contenteditable spellcheck="false" class="bash code-unbound" data-trim>
+rvm install 2.2.3 --patch http://blog.tdg5.com/tco_diff
+    </code></pre>
+    <pre><code contenteditable spellcheck="false" class="diff code-unbound" data-trim>
+--- a/vm_opts.h
++++ b/vm_opts.h
+@@ -18,8 +18,8 @@
+
+-#define OPT_TRACE_INSTRUCTION        1
+-#define OPT_TAILCALL_OPTIMIZATION    0
++#define OPT_TRACE_INSTRUCTION        0
++#define OPT_TAILCALL_OPTIMIZATION    1
+ #define OPT_PEEPHOLE_OPTIMIZATION    1
+ #define OPT_SPECIALISED_INSTRUCTION  1
+    </code></pre>
+  </section>
+  <section>
     <p class="font-size-lg"><code>RubyVM::InstructionSequence</code></p>
     <p class="font-size-md">
       Since, the <code>tco_method</code> gem uses
