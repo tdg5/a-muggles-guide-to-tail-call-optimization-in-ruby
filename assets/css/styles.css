@@ -137,6 +137,17 @@
 }
 
 .reveal pre {
+  border: 5px solid transparent;
   font-size: 1em;
   width: 95%;
+}
+
+.reveal pre code {
+  background-color: #ddd;
+  color: initial;
+}
+
+/* Highlight code in the current fragment to more easily distinguish it */
+.reveal pre.current-fragment, .reveal .current-fragment pre {
+  border-color: #f0f;
 }
