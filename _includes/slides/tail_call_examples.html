@@ -3,7 +3,7 @@
     <h3>Canonical Example</h3>
     <pre><code contenteditable class="ruby" data-trim>
 def a_call_in_tail_position!
-  other_method
+  other_method # &lt;&lt;&lt; Tail call
 end
     </code></pre>
   </section>
@@ -11,7 +11,7 @@ end
     <h3>Canonical Counter-Example</h3>
     <pre><code contenteditable class="ruby" data-trim>
 def not_a_call_in_tail_position!
-  other_method + 1
+  other_method + 1 # &lt;&lt;&lt; Not a tail call
 end
     </code></pre>
 
@@ -19,7 +19,7 @@ end
       <h4>Still no good</h4>
       <pre><code contenteditable class="ruby" data-trim>
 def still_not_a_call_in_tail_position!
-  1 + other_method
+  1 + other_method # &lt;&lt;&lt; Clever, but not a tail call
 end
       </code></pre>
     </div>
