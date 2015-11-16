@@ -5,44 +5,51 @@
   </section>
   <section>
     <h3>The secret magic of tail calls</h3>
-    <p>
-      The trick is that since a tail call is <strong>by definition</strong> the
-      final action of a procedure, we can safely make some assumptions.
+    <p class="margin-top-1em fragment">
+      Tail calls are <strong>by definition</strong> the final action of
+      a procedure
     </p>
-    <p class="fragment" data-fragment-index="1">
-      The most important consequence of these assumptions is that <span
-      class="fragment highlight-green" data-fragment-index="2">since a tail call
-      is the last action of a procedure,</span> we can assume that <span
-      class="fragment highlight-green" data-fragment-index="2"><strong>
-      nothing</strong> else in the calling method will be needed after the tail
-      call is made.</span>
+    <p class="fragment">
+      which means we can safely assume that after a tail call is made
     </p>
-    <p class="fragment font-size-lg"><strong>Nothing.</strong></p>
+    <p class="fragment">
+      <strong>nothing</strong> in the calling method is needed anymore.
+    </p>
   </section>
   <section>
     <p>
-      If nothing from the calling method is needed after the tail call, why keep
+      If nothing from the calling method is needed after the tail call,<br>why keep
       it around?
     </p>
-    <p class="fragment">This is the essence of tail call optimization.</p>
+    <blockquote class="fragment margin-top-3em">
+      While we may prefer to think of a procedure call as meaning "go do this
+      other module and come back", this is only one possble interpretation. We
+      must recognize that there are situations where coming back doesn't matter
+      and these situations may be exploited.
+      <div class="margin-top-1em blockquote-unbound">
+        - Guy L. Steele Jr.
+      </div>
+    </blockquote>
   </section>
   <section>
     <p>
-      Hanging on to the stack frame from the parent serves two main functions:
+      Maintaining a reference to the parent stack frame serves two main functions:
     </p>
-    <ul>
-      <li class="fragment">
-        Keep a pointer to where the result of the tail call should be sent
-      </li>
-      <li class="fragment">
-        Keep a record of the execution stack or where we've been up to this
-        point
-      </li>
-    </ul>
-    <p class="fragment">
-      Of these two functions, the only function that is absolutely necessary is
-      keeping a pointer to where the result of the tail call should be sent.
-    </p>
+    <div class="columns-2 margin-top-1em">
+      <div class="column fragment">
+        <div class="margin-top-1em">
+          <img width="80%" src="/assets/images/stacktrace.jpg">
+        </div>
+        <div>
+          Keep a record of the path that YARV took through your program
+        </div>
+        <div>(i.e. <code>puts caller</code>)</div>
+      </div>
+      <div class="column fragment">
+        <div><img width="80%" src="/assets/images/stackchain.jpg"></div>
+        Keep a record of where the result of each method call needs to go
+      </div>
+    </div>
   </section>
   <section>
     <div class="flames font-size-lg">
@@ -50,50 +57,72 @@
         Keeping a record of the execution stack is nice,<br>but it's really just
         a convenience.
       </p>
-      <p class="font-size-md">
-        In Ruby, the current call stack can be retrieved using the
-        <code>caller</code> method.
-      </p>
     </div>
   </section>
   <section>
-    <h4>
-      Let's pretend we don't care about the complete call stack...
-    </h4>
-    <p class="fragment">
-      If we don't care about maintaining the complete call stack, is there
-      anything we can do to get around the need to keep the parent's stack frame
-      around for the purposes of knowing where to return the result of the tail
-      call?
+    <h3>
+      Let's pretend we don't care about the complete call stack
+    </h3>
+    <p class="fragment margin-top-3em">
+      Is there anyway to avoid keeping the parent stack frame around for the
+      purposes of knowing where to return the result of the tail call?
     </p>
-    <p class="fragment"><strong>As it turns out, yes.</strong></p>
-    <p class="fragment">
-      If the stack frame of the tail call is going to need to know to return its
-      result to the parent anyway, why not just circumvent the parent entirely
-      and return the result of the tail call to the parent of the parent?
+  </section>
+  <section>
+    <strong>As it turns out, no.</strong>
+    <div class="fragment">
+      <h1>Thanks for coming!</h1>
+      <h2>Enjoy the rest of RubyConf</h2>
+    </div>
+  </section>
+  <section><img src="/assets/images/siriusly.gif"></section>
+  <section>
+    <div class="columns-2">
+      <div class="column">
+        <img width="80%" src="/assets/images/stackbuddies.jpg">
+      </div>
+      <div class="column fragment" data-fragment-index="1">
+        <img width="80%" src="/assets/images/stackskip.jpg">
+      </div>
+    </div>
+    <p>
+      If the stack frame of the tail call needs to know to return its result to
+      its parent anyway<span class="fragment" data-fragment-index="1">, why not
+      just circumvent the parent entirely and return the result of the tail call
+      to the parent of the parent?</span>
     </p>
   </section>
   <section>
     <h1>Boom</h1>
+    <img src="/assets/images/boom.gif">
     <p>This is the magic of tail call elimination.</p>
-    <p class="font-size-lg fragment">That's a lot to wrap a mind around...</p>
-    <h2 class="fragment">Questions?</h2>
-    <h3 class="fragment">Tylenol?</h3>
+    <div>
+    <span class="fragment font-size-xl">Questions?</span>&nbsp;
+    <span class="fragment font-size-xl">Tylenol?</span>
   </section>
   <section>
     <h3>But why stop there?</h3>
     <p class="fragment">
-      As it turns out, the phrase tail call elimination is a little misleading.
-    </p>
-    <p class="fragment">
       If you're going to circumvent the parent entirely, why go through the
-      effort of creating a new stack frame for the tail call only to discard the
-      stack frame of the parent?
+      effort of creating a new stack frame for the tail call only to immediately
+      discard the stack frame of the parent?
     </p>
     <p class="fragment">
       In practice, tail call elimination is more a kin to tail call
-      avoidance. There is no extra stack frame that is eliminated, rather the
+      avoidance. There is no "extra" stack frame that is eliminated, rather the
       stack frame of the parent is recycled and reused to execute the tail call.
     </p>
+  </section>
+  <section>
+    <div class="columns-2">
+      <div class="column">
+        <div>Without Tail Call Optimization</div>
+        <img src="/assets/images/stackcount.gif">
+      </div>
+      <div class="column">
+        <div>With Tail Call Optimization</div>
+        <img src="/assets/images/stackcount-tco.gif">
+      </div>
+    </div>
   </section>
 </section>

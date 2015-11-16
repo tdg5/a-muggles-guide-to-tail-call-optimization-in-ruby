@@ -90,6 +90,10 @@
   height: 0;
 }
 
+.reveal .font-size-xl {
+  font-size: 150%;
+}
+
 .reveal .font-size-lg {
   font-size: 125%;
 }
@@ -121,6 +125,10 @@
 
 .reveal .overflow-hidden {
   overflow: hidden;
+}
+
+.reveal .text-align-center {
+  text-align: center;
 }
 
 .reveal .text-align-left {
