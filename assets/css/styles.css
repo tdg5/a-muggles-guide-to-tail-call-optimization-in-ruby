@@ -24,7 +24,7 @@
 }
 
 .reveal .flames:before {
-  background: #000 url(/assets/images/flames-flip.gif) center top repeat-x;
+  background: #000 url(/assets/images/flames-flip.gif) center 1px repeat-x;
   content: "";
   display: block;
   height: 200px;
